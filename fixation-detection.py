@@ -28,6 +28,9 @@ class SubjectList:
                 return i
             i += 1
         return False # if subject was not found
+
+# tl;dr: a Subject object has a name or id (i.e. s4 or s8) and all it's samples (a list of lists).
+# a sample is a row from the train.csv file, but without the subject identifier. 
 class Subject(SubjectList):
     name = ''
     samples = []
@@ -54,7 +57,7 @@ def parseSample(row):
         i += 1
     return sample
 
-# check if current subject is one of the subjects assigned to group 4
+# check if current subject is one of the subjects assigned to us (group 4)
 def isOurSubject(subject):
     for sub in subjects:
         if (subject == sub):
@@ -62,7 +65,7 @@ def isOurSubject(subject):
     return False
 
 # main code block
-subjects = ['s4', 's6', 's12', 's18', 's20', 's26', 's32', 's34']
+subjects = ['s4', 's6', 's12', 's18', 's20', 's26', 's32', 's34'] # group 4 subjects
 dataset = SubjectList()
 with open('train.csv') as data:
         csv_reader = csv.reader(data, delimiter=",")
@@ -83,4 +86,5 @@ with open('train.csv') as data:
 
 
 def i_dt(data, dispersion_threshold, duration_threshold):
+    # TODO: implement the I-DT algorithm
     window = []
