@@ -17,3 +17,6 @@ class Subject(SubjectList):
 
     def getSamples(self):
         return self.samples
+    
+    def numberOfSamples(self):
+        return len(self.samples)
