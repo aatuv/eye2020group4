@@ -7,6 +7,7 @@ from fixation_detection import isOurSubject, parseSample, i_dt
 our_subjects = ['s4', 's6', 's12', 's18', 's20',
             's26', 's32', 's34']  # group 4 subjects
 dataset = SubjectList()
+subject = globals()["Subject"]
 with open('train.csv') as data:
     csv_reader = csv.reader(data, delimiter=",")
     i = 0
@@ -18,15 +19,15 @@ with open('train.csv') as data:
                 dataset.items[subjectIndex].addSample(sample)
             else:
                 sample = parseSample(row)
-                newSubject = Subject(row[0])
-                newSubject.addSample(sample)
-                dataset.add(newSubject)
+                dataset.add(Subject(row[0], [sample]))
 
         i += 1
-    print(dataset.items[0].samples[0][1])
-    print(dataset.items[1].samples[0][1])
-"""     test = dataset.getSubject('s4')
+    
+    # test the algorithm:
+    # 1. take one of the subjects
+    # 2. run one of the subject's samples through the algorithm
+    # 3. print results
+
+    test = dataset.getSubject('s6')
     samples = test.getSamples()
-    print(test.name)
-    print(test.samples[0][2])
-    print(i_dt(samples[1], 1, 100)) """
+    print(i_dt(samples[1], 1, 100))

@@ -28,16 +28,24 @@ def isOurSubject(subjects, subject_id):
             return True
     return False
 
-# important assumption: sampling rate is 1000Hz!
+# I-DT
+# -------------------------------------------------
+# PARAMETERS:
+# data: a recorded sample of gaze data
+# dispersion_threshold: the dispersion threshold in visual degrees
+# duration_threshold: the duration threshold in milliseconds
+# -------------------------------------------------
+# RETURN:
+# known-value (decision of the subject concerning the observed image (true = recognized imaged, false = did not recognize))
+# a list of fixation centroids for the detected fixations
+# a list of fixation durations for the detected fixations
+# -------------------------------------------------
 def i_dt(data, dispersion_threshold, duration_threshold):
-    # TODO: implement the I-DT algorithm
-    print(len(data))
     fix_centroids = []
     fix_durations = []
     points = data
-    
-    points.pop(0) # pop out the boolean value for clarity
-    print(len(points))
+    known = points[0] #decision of the subject concerning the observed image (true = recognized imaged, false = did not recognize).
+    points.pop(0) # pop out the boolean value from the processed data as we don't need it here
     pointer = 0
     while pointer < len(points) and (pointer + duration_threshold) < len(points): # while there still are points
         # initialize window covering duration threshold
@@ -56,12 +64,12 @@ def i_dt(data, dispersion_threshold, duration_threshold):
             fix_centroids.append(centroid)
             fix_durations.append(len(window))
         else:
-                pointer += 1
-    return (fix_centroids, fix_durations)
+            pointer += 1
+    return (known, fix_centroids, fix_durations)
 
 def unitsToVisualDegrees(size_in_units):
     height = 11.3  # monitor height in centimeters
-    distance = 45  # distance between monitor and subject in centimeters
+    distance = 45.0  # distance between monitor and subject in centimeters
     resolution = 1400  # vertical resolution in units
     
     deg_per_unit = degrees(atan2(.5*height, distance)) / (.5*resolution)
@@ -69,34 +77,34 @@ def unitsToVisualDegrees(size_in_units):
     size_in_deg = size_in_units * deg_per_unit
     return size_in_deg
 
-#Dispersion is defined as d = [max(x) min(x)] + [max(y) min(y)], where (x, y) represent the samples inside the window
+#Dispersion is defined as dispersion D = [max(x) – min(x)] +[max(y) – min(y)], where (x, y) represent the samples inside the window
 def getDispersion(window):
-    dispersion = (maxX(window) * minX(window)) + (maxY(window) * minY(window))
+    dispersion = (maxX(window) - minX(window)) + (maxY(window) - minY(window))
     return dispersion
 
 def maxX(window):
-    max_x = 0
+    max_x = window[0][0]
     for point in window:
         if point[0] > max_x:
             max_x = point[0]
     return max_x
 
 def minX(window):
-    min_x = 0
+    min_x = window[0][0]
     for point in window:
         if point[0] < min_x:
             min_x = point[0]
     return min_x
 
 def maxY(window):
-    max_y = 0
+    max_y = window[0][1]
     for point in window:
         if point[1] > max_y:
             max_y = point[1]
     return max_y
 
 def minY(window):
-    min_y = 0
+    min_y = window[0][1]
     for point in window:
         if point[1] > min_y:
             min_y = point[1]
@@ -105,11 +113,11 @@ def minY(window):
 def averageX(points):
     total = 0
     for point in points:
-        total = total + point[0]
-    total / len(points)
+        total += point[0]
+    return total / len(points)
 
 def averageY(points):
     total = 0
     for point in points:
-        total = total + point[1]
-    total / len(points)
+        total += point[1]
+    return total / len(points)

@@ -5,8 +5,9 @@ class Subject(SubjectList):
     name = ''
     samples = []
 
-    def __init__(self, name):
+    def __init__(self, name, samples):
         self.name = name
+        self.samples = samples
 
     def addSample(self, sample):
         self.samples.append(sample)
