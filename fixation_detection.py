@@ -43,8 +43,8 @@ def isOurSubject(subjects, subject_id):
 def i_dt(data, dispersion_threshold, duration_threshold):
     fix_centroids = []
     fix_durations = []
-    points = data
-    known = points[0] #decision of the subject concerning the observed image (true = recognized imaged, false = did not recognize).
+    known = data[0] #decision of the subject concerning the observed image (true = recognized imaged, false = did not recognize).
+    points = data.copy()
     points.pop(0) # pop out the boolean value from the processed data as we don't need it here
     pointer = 0
     while pointer < len(points) and (pointer + duration_threshold) < len(points): # while there still are points

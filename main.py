@@ -30,4 +30,9 @@ with open('train.csv') as data:
 
     test = dataset.getSubject('s6')
     samples = test.getSamples()
-    print(i_dt(samples[1], 1, 100))
+    result = i_dt(samples[1], 1, 100)
+
+    print(f'Subject: {test.name}')
+    print(f'Recognized image: {result[0]}')
+    print(f'Fixation centroids (x, y): {result[1]}')
+    print(f'Fixation durations (ms): {result[2]}')
