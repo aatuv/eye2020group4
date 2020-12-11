@@ -1,2 +1,3 @@
-train.csv
+*.csv
+*.zip
 __pycache__

@@ -47,7 +47,7 @@ def i_dt(data, dispersion_threshold, duration_threshold):
     points = data.copy()
     points.pop(0) # pop out the boolean value from the processed data as we don't need it here
     pointer = 0
-    while pointer < len(points) and (pointer + duration_threshold) < len(points): # while there still are points
+    while pointer < len(points): # while there still are points
         # initialize window covering duration threshold
         window = points[pointer:(pointer + duration_threshold)]
             

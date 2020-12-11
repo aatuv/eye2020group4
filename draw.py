@@ -1,3 +1,4 @@
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -10,13 +11,14 @@ def drawPointsAndFixations(points, fixations):
             x.append(point[0])
             y.append(point[1])
         i += 1
-
-    figure, axes = plt.subplots()
     
     circles = []
     for centroid in fixations[1]:
-        circles.append(plt.Circle(centroid, 80, fill=False))
-    plt.plot(x, y, 'ro-', linewidth=0.1, markersize=0.5)
+        circles.append(plt.Circle(centroid, 25, fc='blue', fill=True))
+    plt.plot(x, y, 'ro', linewidth=0.1, markersize=0.5)
     for circle in circles:
         plt.gcf().gca().add_artist(circle)
+    raw_patch = mpatches.Patch(color='red', label='Raw gaze data')
+    fix_patch = mpatches.Patch(color='blue', label='Center of detected fixation')
+    plt.legend(handles=[fix_patch, raw_patch])
     plt.show()
