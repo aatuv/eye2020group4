@@ -15,6 +15,8 @@ def drawPointsAndFixations(points, fixations):
     circles = []
     for centroid in fixations[1]:
         circles.append(plt.Circle(centroid, 25, fc='blue', fill=True))
+    plt.ylim([-1400, 1400])
+    plt.xlim([-1400, 1400])
     plt.plot(x, y, 'ro', linewidth=0.1, markersize=0.5)
     for circle in circles:
         plt.gcf().gca().add_artist(circle)

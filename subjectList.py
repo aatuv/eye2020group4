@@ -1,9 +1,6 @@
 class SubjectList:
     items = []  # list of Subject objects
 
-    def __init__(self):
-        print('new SubjectList')
-
     def add(self, subject):
         self.items.append(subject)
 
