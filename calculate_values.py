@@ -35,29 +35,29 @@ def calculateMFL_MSA(filename, subject_name, subject_results):
         sa_count_t = 0 # saccade amplitude row count for known=true
         i = 0
         # run through each sample for the results given by the i-dt algorithm
-        for sample_result in subject_results:
-            known = sample_result[0]
-            j = 0
+        for i in range(len(subject_results)):
+            known = subject_results[i][0] # known value for this sample
+            fix_centroids = subject_results[i][1] # list of fixation centroids in this sample
+            fix_durations = subject_results[i][2] # list of fixation durations in this sample
             # take the result from i_dt for a sample and process it further
-            for fd in sample_result[2]:
+            for j in range(len(fix_durations)):
                 if known == 'true':
-                    fd_total_t.append(fd)
+                    fd_total_t.append(fix_durations[j])
                     fd_count_t += 1
-                    if j > 0: # start calculating saccade amplitudes with the second processed value
-                        last_cntr = sample_result[1][j - 1]
-                        cur_cntr = sample_result[1][j]
-                        sa_total_t.append(distance(cur_cntr[0], last_cntr[0], cur_cntr[1], last_cntr[1]))
+                    if j > 0: # start calculating saccade amplitudes with the second value in array
+                        last_cntr = fix_centroids[j - 1] # last centroid (x1, y1)
+                        cur_cntr = fix_centroids[j] # current centroid (x2, y2)
+                        sa_total_t.append(distance(cur_cntr[0], last_cntr[0], cur_cntr[1], last_cntr[1])) # add saccade amplitude to the known=true array
                         sa_count_t += 1
                 else: # known is false
-                    fd_total_f.append(fd)
+                    fd_total_f.append(fix_durations[j])
                     fd_count_f += 1
                     if j > 0:
-                        last_cntr = sample_result[1][j - 1]
-                        cur_cntr = sample_result[1][j]
-                        sa_total_f.append(distance(cur_cntr[0], last_cntr[0], cur_cntr[1], last_cntr[1]))
+                        last_cntr = fix_centroids[j - 1] # last centroid (x1, y1)
+                        cur_cntr = fix_centroids[j] # current centroid (x2, y2)
+                        sa_total_f.append(distance(cur_cntr[0], last_cntr[0], cur_cntr[1], last_cntr[1])) # add saccade amplitude to the known=false array
                         sa_count_f += 1
-                j += 1
-            i += 1
+
         # finally calculate all needed values and add a new result to calculations.csv for this subject
         mfd_true = sum(fd_total_t)/ fd_count_t
         mfd_sd_true = stdev(fd_total_t)
