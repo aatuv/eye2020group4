@@ -24,10 +24,25 @@ with open('train.csv') as data:
                 dataset.add(Subject(row[0], [sample]))
 
         i += 1
-        
+
+    print('EYE2020 Group Project (Group 4): I-DT Gaze Data Processing')
+
+    print('Please enter dispersion threshold for the I-DT algorithm (visual threshold):')
+
+    try:
+        dis_threshold = float(input())
+    except:
+        print('Invalid dispersion threshold value. Please enter a positive threshold value (visual degrees)')
+
+    print('Please enter duration threshold for the I-DT algorithm:')
+
+    try:
+        dur_threshold = int(input())
+    except:
+        print('Invalid dispersion threshold value. Please enter a positive threshold value (visual degrees)')
+
+    print('Please wait, processing data...')
     # write results as csv
-    dis_threshold = 1 # for the i-dt algorithm
-    dur_threshold = 200 # for the i-dt algorithm
     current_time_ms = int(round(time.time() * 1000)) # for naming the csv file for the calculations
     filename = f'calculations_{current_time_ms}'
     for subject in dataset.items:
@@ -37,6 +52,9 @@ with open('train.csv') as data:
             results.append(i_dt(sample, dis_threshold, dur_threshold))
         #writeResult(subject.name, results)
         calculateMFL_MSA(filename, subject.name[1:], results)
+    
+    print('Done')
+    print(f'Results saved to {filename}.csv with following I-DT settings: dispersion threshold {dis_threshold}°, duration threshold {dur_threshold} ms')
 
 """ 
 s_26 = dataset.getSubject('s26')

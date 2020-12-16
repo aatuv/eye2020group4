@@ -16,11 +16,12 @@ def stdev(data):
     std_dev = math.sqrt(var)
     return std_dev
 
-def calculateMFL_MSA(filename, subject_name, subject_results):
+def calculateMFL_MSA(filename, subject_number, subject_results):
     with open(f'{filename}.csv', mode="a", newline='') as calc_data:
         csv_writer = csv.writer(calc_data, delimiter=',')
         try: # first row 
             if os.path.getsize(f'{filename}.csv') == 0:
+                print('Printing results as csv...')
                 csv_writer.writerow(['subject_id', 'MFD_true', 'MFD_SD_true', 'MFD_false', 'MFD_SD_false', 'MSA_true', 'MSA_SD_true', 'MSA_false', 'MSA_SD_false', 'MFD_overall', 'MFD_overall_SD', 'MSA_overall', 'MSA_overall_SD'])
         except OSError as e:
             print(e.strerror)
@@ -74,4 +75,4 @@ def calculateMFL_MSA(filename, subject_name, subject_results):
         fd_total_f.extend(fd_total_t)
         msa_overall_sd = unitsToVisualDegrees(stdev(sa_total_f))
         # write a row for this subject
-        csv_writer.writerow([subject_name, mfd_true, mfd_sd_true, mfd_false, mfd_sd_false, msa_true, msa_sd_true, msa_false, msa_sd_false, mfd_overall, mfd_overall_sd, msa_overall, msa_overall_sd])
+        csv_writer.writerow([subject_number, mfd_true, mfd_sd_true, mfd_false, mfd_sd_false, msa_true, msa_sd_true, msa_false, msa_sd_false, mfd_overall, mfd_overall_sd, msa_overall, msa_overall_sd])
