@@ -27,7 +27,7 @@ with open('train.csv') as data:
         
     # write results as csv
     dis_threshold = 1 # for the i-dt algorithm
-    dur_threshold = 100 # for the i-dt algorithm
+    dur_threshold = 200 # for the i-dt algorithm
     current_time_ms = int(round(time.time() * 1000)) # for naming the csv file for the calculations
     filename = f'calculations_{current_time_ms}'
     for subject in dataset.items:
