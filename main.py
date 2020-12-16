@@ -27,19 +27,19 @@ with open('train.csv') as data:
 
     print('EYE2020 Group Project (Group 4): I-DT Gaze Data Processing')
 
-    print('Please enter dispersion threshold for the I-DT algorithm (visual threshold):')
+    print('Please enter dispersion threshold for the I-DT algorithm (visual degrees):')
 
     try:
         dis_threshold = float(input())
     except:
         print('Invalid dispersion threshold value. Please enter a positive threshold value (visual degrees)')
 
-    print('Please enter duration threshold for the I-DT algorithm:')
+    print('Please enter duration threshold for the I-DT algorithm (milliseconds):')
 
     try:
         dur_threshold = int(input())
     except:
-        print('Invalid dispersion threshold value. Please enter a positive threshold value (visual degrees)')
+        print('Invalid duration threshold value. Please enter a positive threshold value (milliseconds)')
 
     print('Please wait, processing data...')
     # write results as csv
