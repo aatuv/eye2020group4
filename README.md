@@ -4,9 +4,8 @@
 ## IMPORTANT: Add train.csv to the working directory!
 
 ## How to run the code
-Run main.py
-To change the parameters for the I-DT algorithm, change `dis_threshold` (visual degrees) and `dur_threshold` (milliseconds) values in `main.py`. By default dispersion threshold is 1° and duration threshold is 100 ms.
-
+Run `main.py`
+Enter settings for the I-DT algorithm in command line. 
 ### I-DT pseudo code
 
 ```
